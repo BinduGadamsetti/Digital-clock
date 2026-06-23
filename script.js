@@ -1,70 +1,49 @@
-// Typing Animation
+// Digital Clock
+function updateClock() {
+    const now = new Date();
 
-const text =
-" CSE Student | Portfolio ";
+    let hours = String(now.getHours()).padStart(2, '0');
+    let minutes = String(now.getMinutes()).padStart(2, '0');
+    let seconds = String(now.getSeconds()).padStart(2, '0');
 
-let i = 0;
+    document.getElementById("clock").textContent =
+        `${hours}:${minutes}:${seconds}`;
+}
 
-function typingEffect(){
+setInterval(updateClock, 1000);
+updateClock();
 
-    if(i < text.length){
 
-        document.getElementById("typing").innerHTML += text.charAt(i);
+// Countdown Timer (New Year)
+const targetDate = new Date("January 1, 2027 00:00:00").getTime();
 
-        i++;
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
 
-        setTimeout(typingEffect,100);
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+        (distance % (1000 * 60 * 60)) /
+        (1000 * 60)
+    );
+    const seconds = Math.floor(
+        (distance % (1000 * 60)) / 1000
+    );
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+
+    if (distance < 0) {
+        document.getElementById("countdown").innerHTML =
+            "<h2>🎉 Happy New Year! 🎉</h2>";
     }
 }
 
-typingEffect();
-
-
-// Form Validation
-
-document
-.getElementById("contactForm")
-.addEventListener("submit",function(e){
-
-    e.preventDefault();
-
-    let name =
-    document.getElementById("name").value.trim();
-
-    let email =
-    document.getElementById("email").value.trim();
-
-    let message =
-    document.getElementById("message").value.trim();
-
-    let error =
-    document.getElementById("error");
-
-    let emailPattern =
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if(name === ""){
-        error.style.color = "red";
-        error.innerText = "Please enter your name";
-        return;
-    }
-
-    if(!emailPattern.test(email)){
-        error.style.color = "red";
-        error.innerText = "Please enter a valid email";
-        return;
-    }
-
-    if(message.length < 10){
-        error.style.color = "red";
-        error.innerText =
-        "Message should contain at least 10 characters";
-        return;
-    }
-
-    error.style.color = "lightgreen";
-    error.innerText =
-    "Form Submitted Successfully ✅";
-
-    document.getElementById("contactForm").reset();
-});
+setInterval(updateCountdown, 1000);
+updateCountdown();
